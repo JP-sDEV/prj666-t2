@@ -21,29 +21,29 @@ import DeviceCard from "../components/cards/device";
 export default function DashboardPage() {
   const { devices, isLoading } = useDevices();
 
-  const temperatureData = [
-    { timestamp: "2025-02-14T21:00:32.099Z", temperature: 9.77 },
-    { timestamp: "2025-02-14T21:00:32.141Z", temperature: 2.81 },
-    { timestamp: "2025-02-14T21:00:32.176Z", temperature: 7.18 },
-    { timestamp: "2025-02-14T21:00:32.219Z", temperature: 2.97 },
-    { timestamp: "2025-02-14T21:00:32.254Z", temperature: 6.45 },
-  ];
+  // const temperatureData = [
+  //   { timestamp: "2025-02-14T21:00:32.099Z", temperature: 9.77 },
+  //   { timestamp: "2025-02-14T21:00:32.141Z", temperature: 2.81 },
+  //   { timestamp: "2025-02-14T21:00:32.176Z", temperature: 7.18 },
+  //   { timestamp: "2025-02-14T21:00:32.219Z", temperature: 2.97 },
+  //   { timestamp: "2025-02-14T21:00:32.254Z", temperature: 6.45 },
+  // ];
 
-  const humidityData = [
-    { timestamp: "2025-02-14T21:00:32.099Z", humidity: 31.96 },
-    { timestamp: "2025-02-14T21:00:32.141Z", humidity: 87.47 },
-    { timestamp: "2025-02-14T21:00:32.176Z", humidity: 94.5 },
-    { timestamp: "2025-02-14T21:00:32.219Z", humidity: 75.29 },
-    { timestamp: "2025-02-14T21:00:32.254Z", humidity: 83.3 },
-  ];
+  // const humidityData = [
+  //   { timestamp: "2025-02-14T21:00:32.099Z", humidity: 31.96 },
+  //   { timestamp: "2025-02-14T21:00:32.141Z", humidity: 87.47 },
+  //   { timestamp: "2025-02-14T21:00:32.176Z", humidity: 94.5 },
+  //   { timestamp: "2025-02-14T21:00:32.219Z", humidity: 75.29 },
+  //   { timestamp: "2025-02-14T21:00:32.254Z", humidity: 83.3 },
+  // ];
 
-  const moistureData = [
-    { timestamp: "2025-02-14T21:00:32.099Z", moisture: 9.42 },
-    { timestamp: "2025-02-14T21:00:32.141Z", moisture: 61.11 },
-    { timestamp: "2025-02-14T21:00:32.176Z", moisture: 69.65 },
-    { timestamp: "2025-02-14T21:00:32.219Z", moisture: 74.09 },
-    { timestamp: "2025-02-14T21:00:32.254Z", moisture: 65.23 },
-  ];
+  // const moistureData = [
+  //   { timestamp: "2025-02-14T21:00:32.099Z", moisture: 9.42 },
+  //   { timestamp: "2025-02-14T21:00:32.141Z", moisture: 61.11 },
+  //   { timestamp: "2025-02-14T21:00:32.176Z", moisture: 69.65 },
+  //   { timestamp: "2025-02-14T21:00:32.219Z", moisture: 74.09 },
+  //   { timestamp: "2025-02-14T21:00:32.254Z", moisture: 65.23 },
+  // ];
 
   const { data: session, status } = useSession({
     required: true,
@@ -59,7 +59,9 @@ export default function DashboardPage() {
       </div>
     );
   }
-
+  if (!devices) {
+    return <h1>You didn't register your device</h1>;
+  }
   return (
     <main className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
       <section className="w-full max-w-4xl">
@@ -95,13 +97,13 @@ export default function DashboardPage() {
         </div>
 
         {/* Additional Charts */}
-        <div className="mt-6">
+        {/* <div className="mt-6">
           <Chart
             temperatureData={temperatureData}
             humidityData={humidityData}
             moistureData={moistureData}
           />
-        </div>
+        </div> */}
 
         <div className="mt-6">
           {devices.map((device, index) => (

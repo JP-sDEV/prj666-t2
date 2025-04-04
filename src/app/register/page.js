@@ -1,6 +1,6 @@
 "use client";
 import { signIn } from "next-auth/react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
@@ -8,7 +8,8 @@ import { Eye, EyeOff } from "lucide-react";
 export default function LoginPage() {
   const router = useRouter();
   const { data: session, status } = useSession();
-
+  const [successMessage, setSuccessMessage] = useState("");
+  const [showPopup, setShowPopup] = useState(false); 
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -59,7 +60,11 @@ export default function LoginPage() {
         body: JSON.stringify(formData),
       });
       if (res.ok) {
-        router.push("/login"); // Redirect after successful registration
+        setSuccessMessage("Device registered successfully!");
+        setShowPopup(true); // 즉시 팝업을 보이게 설정
+        setTimeout(() => {
+          router.push("/login"); // 2.5초 후 Sign in 페이지로 리디렉션
+        }, 2500);
       }
     } catch (error) {
       console.error("Registration failed:", error);
@@ -68,12 +73,36 @@ export default function LoginPage() {
     }
   };
 
+  // 애니메이션 종료 후 successMessage 상태를 초기화
+  useEffect(() => {
+    if (successMessage) {
+      setTimeout(() => {
+        setSuccessMessage("");
+      }, 2500); // 2.5초 후 메시지 숨기기
+    }
+  }, [successMessage]);
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-white text-gray-900">
       <div className="w-full max-w-md bg-gray-50 p-6 rounded-lg shadow-md">
         <h3 className="text-gray-900 lg:text-3xl text-2xl font-bold mb-8">
           Register
         </h3>
+
+        {/* Success Popup */}
+        {successMessage && (
+          <div
+            className="fixed inset-0 flex items-center justify-center z-50 bg-opacity-50"
+            onClick={() => setSuccessMessage(false)} // 클릭 시 팝업 닫기
+          >
+            <div
+              className="bg-green-100 text-green-700 p-6 rounded-lg shadow-lg w-80 text-center transition-opacity duration-1000 opacity-0 animate-fadeIn"
+              style={{ animationDuration: "1s", opacity: "1" }}
+            >
+              <p>{successMessage}</p>
+            </div>
+          </div>
+        )}
 
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div className="flex gap-4">

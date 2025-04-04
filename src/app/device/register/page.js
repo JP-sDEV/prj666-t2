@@ -14,6 +14,7 @@ export default function LoginPage() {
     mode: "user",
   });
   const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -54,7 +55,13 @@ export default function LoginPage() {
         });
 
         console.log("Register Success!");
+
+        setTimeout(() => {
+          setSuccessMessage("Device registered successfully!");  // 메시지를 빈 문자열로 설정하여 숨깁니다.
+          //router.push("/login"); // Sign in 페이지로 리디렉션
+        }, 3000);
       } else {
+        setError(data.message || "Failed to register.");
         console.log("Response: ", response);
       }
     } catch (error) {

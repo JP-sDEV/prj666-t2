@@ -8,7 +8,7 @@ import Chart from "../components/charts/line";
 import React from "react";
 import dynamic from "next/dynamic";
 import DeviceCard from "../components/cards/device";
-
+import Link from "next/link";
 // Import the DashboardCharts component with dynamic import to avoid SSR issues with WebSockets
 // const DashboardCharts = dynamic(
 //   () => import("@/components/dashboard/DashboardCharts"),
@@ -59,16 +59,27 @@ export default function DashboardPage() {
       </div>
     );
   }
-  if (!devices) {
-    return <h1>You didn't register your device</h1>;
-  }
+
   return (
     <main className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
       <section className="w-full max-w-4xl">
         <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-xl font-semibold mb-2">
-            Welcome, {session?.user?.name}
-          </h2>
+        {(!devices || devices.length === 0) ? ( 
+          <>
+            <h2 className="text-xl font-semibold mb-2">
+            Welcome, {session?.user?.name}! 
+            </h2>
+            <h2 className="text-xl font-semibold  text-blue-500 mb-2">
+            You didn't register your device
+            </h2>
+          </>
+        ) : (
+          <>
+            <h2 className="text-xl font-semibold mb-2">
+            Welcome, {session?.user?.name}!
+            </h2>
+          </> )}
+
           <p className="text-gray-600">
             This is a protected route. You can only see this if you&apos;re
             logged in.
@@ -104,6 +115,19 @@ export default function DashboardPage() {
             moistureData={moistureData}
           />
         </div> */}
+
+          {/* Check if devices are registered */}
+          {(!devices || devices.length === 0) && (
+            <div>
+              <Link
+                href="/devices" 
+                className="mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+              >
+                Go to Device Registration
+              </Link>
+            </div>
+          )}
+
 
         <div className="mt-6">
           {devices.map((device, index) => (

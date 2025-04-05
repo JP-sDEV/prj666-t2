@@ -30,8 +30,8 @@ const waitForUserToRegister = (device_id) => {
   });
 };
 
-// POST /api/devices/register
 export async function POST(req) {
+
   try {
     const session = await getServerSession(authOptions);
     const { device_id, mode, name } = await req.json();
@@ -63,17 +63,19 @@ export async function POST(req) {
     }
 
     await connectToDatabase();
-
+ 
     // Step 2: User registers the device
     if (mode === "user") {
-      console.log("available devices: ", registeredDevices);
+
+      console.log("available devices: ", registeredDevices); // Set(0){}
       if (!session) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
       }
 
+      //changed the code
       if (!registeredDevices.has(device_id)) {
         return NextResponse.json(
-          { error: "Device not found or timeout expired" },
+          { error: "Device not found or timeout expired" }, // error here!!!!!!!!!!!!!!!
           { status: 404 }
         );
       }

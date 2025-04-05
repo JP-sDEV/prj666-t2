@@ -20,7 +20,7 @@ export default function LoginPage() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [errorMessage, setErrorMessage] = useState("");  
   const [passwordValidation, setPasswordValidation] = useState({
     hasMinLength: false,
     hasUpperCase: false,
@@ -60,11 +60,17 @@ export default function LoginPage() {
         body: JSON.stringify(formData),
       });
       if (res.ok) {
-        setSuccessMessage("Device registered successfully!");
-        setShowPopup(true); // 즉시 팝업을 보이게 설정
+        setSuccessMessage("User registered successfully!");
+        setShowPopup(true); 
+
         setTimeout(() => {
-          router.push("/login"); // 2.5초 후 Sign in 페이지로 리디렉션
+          router.push("/login");
         }, 2500);
+      }else {
+        const data = await res.json();
+        if (data.error) {
+          setErrorMessage(data.error); 
+        }
       }
     } catch (error) {
       console.error("Registration failed:", error);
@@ -73,12 +79,11 @@ export default function LoginPage() {
     }
   };
 
-  // 애니메이션 종료 후 successMessage 상태를 초기화
   useEffect(() => {
     if (successMessage) {
       setTimeout(() => {
         setSuccessMessage("");
-      }, 2500); // 2.5초 후 메시지 숨기기
+      }, 2500); 
     }
   }, [successMessage]);
 
@@ -93,13 +98,28 @@ export default function LoginPage() {
         {successMessage && (
           <div
             className="fixed inset-0 flex items-center justify-center z-50 bg-opacity-50"
-            onClick={() => setSuccessMessage(false)} // 클릭 시 팝업 닫기
+            onClick={() => setSuccessMessage(false)}
           >
             <div
               className="bg-green-100 text-green-700 p-6 rounded-lg shadow-lg w-80 text-center transition-opacity duration-1000 opacity-0 animate-fadeIn"
               style={{ animationDuration: "1s", opacity: "1" }}
             >
               <p>{successMessage}</p>
+            </div>
+          </div>
+        )}
+
+        {/* Error Message */}
+        {errorMessage && (
+          <div
+            className="fixed inset-0 flex items-center justify-center z-50 bg-opacity-50"
+            onClick={() => setErrorMessage("")}
+          >
+            <div
+              className="bg-red-100 text-red-700 p-6 rounded-lg shadow-lg w-80 text-center transition-opacity duration-1000 opacity-0 animate-fadeIn"
+              style={{ animationDuration: "1s", opacity: "1" }}
+            >
+              <p>{errorMessage}</p>
             </div>
           </div>
         )}

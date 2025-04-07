@@ -46,25 +46,26 @@ export default function Devices() {
           body: JSON.stringify(formData),
         }
       );
-      console.log("111111111111111111111111111111111111111111111111111111:", response.status); //404
-
+    
       const responseData = await response.json(); 
-      if (responseData.ok) {
+
+      // console.log(response.message) //undefined
+      // console.log(responseData.message) //Device already registered!
+      // console.log(response.status) //409
+
+      if (response.status == 200) {
         setFormData({
           userId: "",
           name: "",
           device_id: "",
           mode: "user",
         });
-
-        setSuccessMessage("Device registered successfully!");
-        setShowPopup(true); 
-
-        console.log("Device Register Success!");
+        setSuccessMessage(responseData.message);
 
       } else {
-        setError(responseData.message || "Failed to register!."); //error here!
         console.log("Response: ", responseData);
+        setError(responseData.message || "Failed to register!"); 
+
       }
     } catch (error) {
       console.log("Error: ", error);
@@ -79,6 +80,14 @@ export default function Devices() {
     }
   }, [successMessage]);
 
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        setError("");
+      }, 2500);
+    }
+  }, [error]);
+  
   return (
     <div className="min-h-screen flex items-center justify-center bg-white text-gray-900">
       <div className="w-full max-w-md bg-gray-50 p-6 rounded-lg shadow-md">
@@ -86,21 +95,11 @@ export default function Devices() {
           Register Device
         </h3>
 
-        {/* Success Popup */}
         {successMessage && (
-          <div
-            className="fixed inset-0 flex items-center justify-center z-50 bg-opacity-50"
-            onClick={() => setSuccessMessage(false)}
-          >
-            <div
-              className="bg-green-100 text-green-700 p-6 rounded-lg shadow-lg w-80 text-center transition-opacity duration-1000 opacity-0 animate-fadeIn"
-              style={{ animationDuration: "1s", opacity: "1" }}
-            >
-              <p>{successMessage}</p>
-            </div>
+          <div className="mb-6 p-3 bg-green-100 text-green-700 rounded-md">
+            {successMessage}
           </div>
         )}
-
         {error && (
           <div className="mb-6 p-3 bg-red-100 text-red-700 rounded-md">
             {error}

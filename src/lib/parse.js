@@ -9,7 +9,7 @@ const parseIncomingData = (rawData) => {
     // Convert Decimal128 to string and then parse it to a float
     const temperature = parseFloat(entry.temperature.toString());
     const humidity = parseFloat(entry.humidity.toString());
-    const moisture = parseFloat(entry.moisture);
+    const moisture = parseFloat(entry.moisture.toString());
 
     // Push to the respective arrays
     data.temperature.push({

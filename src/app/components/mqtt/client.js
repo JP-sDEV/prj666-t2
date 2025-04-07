@@ -154,9 +154,9 @@ export default function MqttSubscriber() {
   return (
     <div className="pl-20 pr-20 pb-20 shadow-lg bg-white text-center">
       <div className="flex items-center justify-center">
-      <h2 className="text-4xl font-extrabold text-black transform transition duration-500 ease-in-out ">
-  Live Sensor Data
-</h2>
+        <h2 className="text-4xl font-extrabold text-black transform transition duration-500 ease-in-out ">
+          Live Sensor Data
+        </h2>
         {isLoading && (
           <FaSpinner className="animate-spin text-lg text-gray-500 ml-4" style={{ animationDuration: "1.2s" }} />
         )}

@@ -129,8 +129,6 @@ export default function DevicePage({ params }) {
     <div className="p-6">
       <h1 className="text-2xl font-bold">Device ID: {deviceId}</h1>
 
-
-
       {/* Button to send the POST request */}
       {/* <button
         onClick={handlePostRequest}

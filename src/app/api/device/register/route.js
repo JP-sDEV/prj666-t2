@@ -71,14 +71,13 @@ export async function POST(req) {
       if (!session) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
       }
-
-      //changed the code
-      if (!registeredDevices.has(device_id)) {
-        return NextResponse.json(
-          { error: "Device not found or timeout expired" }, // error here!!!!!!!!!!!!!!!
-          { status: 404 }
-        );
-      }
+    
+      // if (registeredDevices.has(device_id)) {
+      //   return NextResponse.json(
+      //     { message: "Device already registered" },
+      //     { status: 409 }
+      //   );
+      // }
 
       const userId = session.user.id;
       registeredDevices.delete(device_id); // Remove from temporary storage
@@ -95,9 +94,19 @@ export async function POST(req) {
       // 2. create a new Raspberry Pi
       await connectToDatabase();
       // 2a. check if device already exists
+
       const device = await RaspberryPi.findOne({ serialId: serialId });
+
+      console.log("2222222222222222222222222222222222222222" + session.user._id) //undefined
+      console.log("2222222222222222222222222222222222222222" + user._id) //67f40d12cef4ac17bb3897e8
+      console.log("2222222222222222222222222222222222222222" + userId) //67f40d12cef4ac17bb3897e8
+
       if (device) {
-        throw new Error("Device already registered");
+        return NextResponse.json(
+          { message: "Device already registered!" }, 
+          { status: 409 }
+        );
+        // throw new Error("Device already registered");
       } else {
         // not registered yet
         const newRaspberryPi = new RaspberryPi({
@@ -118,8 +127,9 @@ export async function POST(req) {
       console.log(`Device ${device_id} linked to user ${userId}`);
 
       return NextResponse.json(
-        { message: "Device linked successfully" },
-        { status: 200 }
+        { message: "Device linked successfully!!" },
+        { status: 200 },
+        console.log("Device linked successfully!!") //working. it returns 200
       );
     }
 

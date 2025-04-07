@@ -72,6 +72,11 @@ export default function LoginPage() {
           Register Device
         </h3>
 
+        {successMessage && (
+          <div className="mb-6 p-3 bg-green-100 text-green-700 rounded-md">
+            {successMessage}
+          </div>
+        )}
         {error && (
           <div className="mb-6 p-3 bg-red-100 text-red-700 rounded-md">
             {error}

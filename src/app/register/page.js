@@ -9,7 +9,6 @@ export default function LoginPage() {
   const router = useRouter();
   const { data: session, status } = useSession();
   const [successMessage, setSuccessMessage] = useState("");
-  const [showPopup, setShowPopup] = useState(false); 
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -61,7 +60,6 @@ export default function LoginPage() {
       });
       if (res.ok) {
         setSuccessMessage("User registered successfully!");
-        setShowPopup(true); 
 
         setTimeout(() => {
           router.push("/login");
@@ -94,35 +92,12 @@ export default function LoginPage() {
           Register
         </h3>
 
-        {/* Success Popup */}
         {successMessage && (
-          <div
-            className="fixed inset-0 flex items-center justify-center z-50 bg-opacity-50"
-            onClick={() => setSuccessMessage(false)}
-          >
-            <div
-              className="bg-green-100 text-green-700 p-6 rounded-lg shadow-lg w-80 text-center transition-opacity duration-1000 opacity-0 animate-fadeIn"
-              style={{ animationDuration: "1s", opacity: "1" }}
-            >
-              <p>{successMessage}</p>
-            </div>
+          <div className="mb-6 p-3 bg-green-100 text-green-700 rounded-md">
+            {successMessage}
           </div>
         )}
 
-        {/* Error Message */}
-        {errorMessage && (
-          <div
-            className="fixed inset-0 flex items-center justify-center z-50 bg-opacity-50"
-            onClick={() => setErrorMessage("")}
-          >
-            <div
-              className="bg-red-100 text-red-700 p-6 rounded-lg shadow-lg w-80 text-center transition-opacity duration-1000 opacity-0 animate-fadeIn"
-              style={{ animationDuration: "1s", opacity: "1" }}
-            >
-              <p>{errorMessage}</p>
-            </div>
-          </div>
-        )}
 
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div className="flex gap-4">

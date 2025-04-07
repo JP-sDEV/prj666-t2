@@ -70,7 +70,7 @@ export default function DashboardPage() {
             Welcome, {session?.user?.name}! 
             </h2>
             <h2 className="text-xl font-semibold  text-blue-500 mb-2">
-            You didn't register your device
+            You didn&apos;t register your device
             </h2>
           </>
         ) : (

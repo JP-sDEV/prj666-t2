@@ -129,22 +129,24 @@ export default function DevicePage({ params }) {
     <div className="p-6">
       <h1 className="text-2xl font-bold">Device ID: {deviceId}</h1>
 
+
+
       {/* Button to send the POST request */}
-      <button
+      {/* <button
         onClick={handlePostRequest}
         className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
         disabled={isLoading}
       >
         {isLoading ? "Sending..." : "Initialize Client"}
-      </button>
+      </button> */}
 
-      <button
+      {/* <button
         onClick={getLiveData}
         className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
         disabled={isLoading}
       >
         Get data point
-      </button>
+      </button> */}
 
       <MqttSubscriber />
 

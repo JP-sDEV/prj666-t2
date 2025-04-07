@@ -6,7 +6,7 @@ const DeviceCard = ({ deviceName, deviceId }) => {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push(`/device/${deviceId}`); // Navigate to dynamic route
+    router.push(`/device/${deviceId}/live`); // Navigate to dynamic route
   };
 
   return (

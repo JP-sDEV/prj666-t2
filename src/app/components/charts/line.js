@@ -33,8 +33,8 @@ const Chart = ({ temperatureData, humidityData, moistureData }) => {
       {
         label: "Temperature (°C)",
         data: temperatureData.map((item) => item.temperature),
-        borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.2)",
+        borderColor: "rgb(255, 99, 132)", 
+        backgroundColor: "rgba(255, 99, 132, 0.2)", 
         fill: true,
         yAxisID: "y1", // Assign to the first Y-axis
       },
@@ -60,6 +60,27 @@ const Chart = ({ temperatureData, humidityData, moistureData }) => {
   // Set options for the chart
   const chartOptions = {
     responsive: true,
+    plugins: {
+      legend: {
+        position: "top",  
+        labels: {
+          font: {
+            size: 15,
+            weight: "bold",  
+          },
+          padding: 50, 
+        },
+      },
+      // tooltip: {
+      //   titleFont: {
+      //     size: 16,
+      //     weight: 'bold',
+      //   },
+      //   bodyFont: {
+      //     size: 14,
+      //   },
+      // },
+    },
     scales: {
       y1: {
         type: "linear",
@@ -69,7 +90,11 @@ const Chart = ({ temperatureData, humidityData, moistureData }) => {
         },
         title: {
           display: true,
-          text: "Temperature (°C)",
+          text: "Celsius (°C)",
+          font: {
+            size: 20,  
+            weight: "bold",  
+          },
         },
       },
       y2: {
@@ -80,6 +105,10 @@ const Chart = ({ temperatureData, humidityData, moistureData }) => {
         },
         title: {
           display: true,
+          font: {
+            size: 20,  
+            weight: "bold", 
+          },
           text: "Percentage (%)",
         },
       },
